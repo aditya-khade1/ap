@@ -5,6 +5,8 @@ import path from "path";
 import crypto from "crypto";
 import { isAdminSession, unauthorized } from "@/lib/require-admin";
 
+const isVercel = process.env.VERCEL === "1";
+
 const ALLOWED_MIME: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -18,6 +20,16 @@ const MAX_SIZE = MAX_SIZE_MB * 1024 * 1024;
 
 export async function POST(request: Request) {
   if (!(await isAdminSession())) return unauthorized();
+
+  if (isVercel) {
+    return NextResponse.json(
+      {
+        error:
+          "Image uploads are not supported on Vercel (read-only filesystem). Use the seed images shipped with the store, or connect an external image host.",
+      },
+      { status: 501 }
+    );
+  }
 
   try {
     const formData = await request.formData();

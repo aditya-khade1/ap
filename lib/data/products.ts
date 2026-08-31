@@ -1,16 +1,14 @@
-import fs from "fs";
-import path from "path";
 import { seedProducts } from "@/seed/products";
 import { IProduct, ICategory } from "@/types";
 
 /**
- * Products are persisted to a local JSON file at `data/products.json`.
- * This keeps changes made from the admin panel across server restarts
- * without needing a database.
+ * Products are persisted to a local JSON file at `data/products.json` when
+ * running locally (`npm run dev` / `npm run start`). On Vercel the filesystem
+ * is read-only, so an in-memory store seeded from `seed/products.ts` is used.
  *
- * The exported API mirrors a database-like store (get / find / create /
- * update / delete / query), so a real DB (MongoDB, Postgres, SQLite...)
- * can be swapped in later by replacing these functions' internals.
+ * Mutation functions (create / update / delete) still work on Vercel for the
+ * lifetime of a single serverless instance, but changes do not persist across
+ * cold starts. To add real persistence, replace the internals with a database.
  */
 
 interface StoredProduct {
@@ -33,7 +31,102 @@ interface StoredProduct {
   updatedAt: string;
 }
 
-const dataFile = path.join(process.cwd(), "data", "products.json");
+const isVercel = process.env.VERCEL === "1";
+
+// ---------------------------------------------------------------------------
+// File-system helpers (local only)
+// ---------------------------------------------------------------------------
+
+let fsModule: typeof import("fs") | null = null;
+let pathModule: typeof import("path") | null = null;
+let dataFilePath: string | null = null;
+
+function getFs() {
+  if (!fsModule) {
+    fsModule = require("fs");
+    pathModule = require("path");
+    dataFilePath = pathModule!.join(process.cwd(), "data", "products.json");
+  }
+  return { fs: fsModule!, dataFile: dataFilePath! };
+}
+
+function readFile(): StoredProduct[] {
+  try {
+    const { fs, dataFile } = getFs();
+    const raw = fs.readFileSync(dataFile, "utf-8");
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as StoredProduct[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeFile(records: StoredProduct[]) {
+  try {
+    const { fs, dataFile } = getFs();
+    fs.mkdirSync(require("path").dirname(dataFile), { recursive: true });
+    fs.writeFileSync(dataFile, JSON.stringify(records, null, 2), "utf-8");
+  } catch {
+    // Vercel / read-only filesystem — silently skip
+  }
+}
+
+function deleteFile() {
+  try {
+    const { fs, dataFile } = getFs();
+    if (fs.existsSync(dataFile)) fs.unlinkSync(dataFile);
+  } catch {
+    // ignore
+  }
+}
+
+// ---------------------------------------------------------------------------
+// In-memory store (used on Vercel; also serves as the working copy locally)
+// ---------------------------------------------------------------------------
+
+let memoryStore: StoredProduct[] | null = null;
+
+function seedMemory(): StoredProduct[] {
+  const now = new Date().toISOString();
+  memoryStore = seedProducts.map((p, i) => ({
+    ...p,
+    _id: String(i + 1),
+    createdAt: now,
+    updatedAt: now,
+    featured: Boolean(p.featured),
+  })) as unknown as StoredProduct[];
+  return memoryStore;
+}
+
+function load(): StoredProduct[] {
+  if (memoryStore) return memoryStore;
+
+  if (isVercel) {
+    return seedMemory();
+  }
+
+  // Local: try file first, fall back to seed
+  const records = readFile();
+  if (records.length > 0) {
+    memoryStore = records;
+    return memoryStore;
+  }
+
+  // File missing — seed and persist for next restart
+  const seeded = seedMemory();
+  writeFile(seeded);
+  return seeded;
+}
+
+// Always persist writes to file when possible (no-op on Vercel)
+function persist(records: StoredProduct[]) {
+  memoryStore = records;
+  if (!isVercel) writeFile(records);
+}
+
+// ---------------------------------------------------------------------------
+// Conversions
+// ---------------------------------------------------------------------------
 
 function toIProduct(record: StoredProduct): IProduct {
   return {
@@ -57,36 +150,9 @@ function fromIProduct(product: IProduct): StoredProduct {
   };
 }
 
-function readFile(): StoredProduct[] {
-  try {
-    const raw = fs.readFileSync(dataFile, "utf-8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as StoredProduct[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeFile(records: StoredProduct[]) {
-  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-  fs.writeFileSync(dataFile, JSON.stringify(records, null, 2), "utf-8");
-}
-
-function ensureFile(): StoredProduct[] {
-  if (!fs.existsSync(dataFile)) {
-    const now = new Date().toISOString();
-    const records = seedProducts.map((p, i) => ({
-      ...p,
-      _id: String(i + 1),
-      createdAt: now,
-      updatedAt: now,
-      featured: Boolean(p.featured),
-    })) as unknown as StoredProduct[];
-    writeFile(records);
-    return records;
-  }
-  return readFile();
-}
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
 function nextId(records: StoredProduct[]): string {
   const max = records.reduce((acc, r) => {
@@ -112,23 +178,26 @@ function calculateDiscount(price: number, originalPrice: number): number {
   return 0;
 }
 
+// ---------------------------------------------------------------------------
+// Public API
+// ---------------------------------------------------------------------------
+
 export function getProducts(): IProduct[] {
-  return ensureFile().map(toIProduct);
+  return load().map(toIProduct);
 }
 
 export function getProductByIdOrSlug(idOrSlug: string): IProduct | null {
-  const product =
-    ensureFile().find((p) => p._id === idOrSlug || p.slug === idOrSlug) || null;
+  const product = load().find((p) => p._id === idOrSlug || p.slug === idOrSlug) || null;
   return product ? toIProduct(product) : null;
 }
 
 export function getProductById(id: string): IProduct | null {
-  const product = ensureFile().find((p) => p._id === id) || null;
+  const product = load().find((p) => p._id === id) || null;
   return product ? toIProduct(product) : null;
 }
 
 export function createProduct(data: Record<string, unknown>): IProduct {
-  const records = ensureFile();
+  const records = load();
 
   const name = String(data.name || "Untitled").trim();
   const price = Number(data.price) || 0;
@@ -157,8 +226,7 @@ export function createProduct(data: Record<string, unknown>): IProduct {
     updatedAt: new Date().toISOString(),
   };
 
-  const next = [record, ...records];
-  writeFile(next);
+  persist([record, ...records]);
   return toIProduct(record);
 }
 
@@ -166,7 +234,7 @@ export function updateProduct(
   id: string,
   data: Partial<IProduct> & Record<string, unknown>
 ): IProduct | null {
-  const records = ensureFile();
+  const records = load();
   const idx = records.findIndex((p) => p._id === id);
   if (idx === -1) return null;
 
@@ -193,17 +261,18 @@ export function updateProduct(
   }
 
   merged.updatedAt = new Date().toISOString();
-  records[idx] = merged;
-  writeFile(records);
+  const next = [...records];
+  next[idx] = merged;
+  persist(next);
   return toIProduct(merged);
 }
 
 export function deleteProduct(id: string): boolean {
-  const records = ensureFile();
+  const records = load();
   const before = records.length;
   const next = records.filter((p) => p._id !== id);
   if (next.length === before) return false;
-  writeFile(next);
+  persist(next);
   return true;
 }
 
@@ -297,11 +366,8 @@ export function getCategories(): ICategory[] {
 }
 
 export function resetProductsToSeed(): boolean {
-  try {
-    if (fs.existsSync(dataFile)) fs.unlinkSync(dataFile);
-    ensureFile();
-    return true;
-  } catch {
-    return false;
-  }
+  memoryStore = null;
+  deleteFile();
+  load();
+  return true;
 }
