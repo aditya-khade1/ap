@@ -2,9 +2,10 @@ import { seedProducts } from "@/seed/products";
 import { IProduct, ICategory } from "@/types";
 
 /**
- * Products are persisted to a local JSON file at `data/products.json` when
- * running locally (`npm run dev` / `npm run start`). On Vercel the filesystem
- * is read-only, so an in-memory store seeded from `seed/products.ts` is used.
+ * Persisted to a local JSON file at `data/products.json` when running
+ * locally (`npm run dev` / `npm run start`). On Vercel and Netlify the
+ * filesystem is read-only, so an in-memory store seeded from
+ * `seed/products.ts` is used.
  *
  * Mutation functions (create / update / delete) still work on Vercel for the
  * lifetime of a single serverless instance, but changes do not persist across
@@ -31,7 +32,7 @@ interface StoredProduct {
   updatedAt: string;
 }
 
-const isVercel = process.env.VERCEL === "1";
+const isServerless = process.env.VERCEL === "1" || process.env.NETLIFY === "true";
 
 // ---------------------------------------------------------------------------
 // File-system helpers (local only)
@@ -101,7 +102,7 @@ function seedMemory(): StoredProduct[] {
 function load(): StoredProduct[] {
   if (memoryStore) return memoryStore;
 
-  if (isVercel) {
+  if (isServerless) {
     return seedMemory();
   }
 
@@ -118,10 +119,10 @@ function load(): StoredProduct[] {
   return seeded;
 }
 
-// Always persist writes to file when possible (no-op on Vercel)
+// Always persist writes to file when possible (no-op on serverless)
 function persist(records: StoredProduct[]) {
   memoryStore = records;
-  if (!isVercel) writeFile(records);
+  if (!isServerless) writeFile(records);
 }
 
 // ---------------------------------------------------------------------------

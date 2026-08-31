@@ -1,0 +1,16 @@
+# Netlify deployment config for AP Fashion Mart (Next.js App Router).
+#
+# Netlify's built-in Next.js runtime automatically runs server-rendered
+# pages, /api route handlers, middleware and images as serverless functions —
+# there is no need for `next export` or the legacy @netlify/plugin-nextjs.
+# Connect this repo via Netlify > Add new site > Import (GitHub), select
+# this repo, and Netlify will auto-detect these settings.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+  environment = { NODE_VERSION = "20" }
+
+# Next.js apps deployed with the Netlify Next runtime should NOT add a
+# catch-all /* /index.html redirect — that would break SSR pages and API
+# routes. The runtime generates the correct redirect table automatically.
