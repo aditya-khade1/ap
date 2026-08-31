@@ -3,11 +3,11 @@ import { IProduct, ICategory } from "@/types";
 
 /**
  * Persisted to a local JSON file at `data/products.json` when running
- * locally (`npm run dev` / `npm run start`). On Vercel and Netlify the
+ * locally (`npm run dev` / `npm run start`). When deployed on Netlify the
  * filesystem is read-only, so an in-memory store seeded from
  * `seed/products.ts` is used.
  *
- * Mutation functions (create / update / delete) still work on Vercel for the
+ * Mutation functions (create / update / delete) still work on Netlify for the
  * lifetime of a single serverless instance, but changes do not persist across
  * cold starts. To add real persistence, replace the internals with a database.
  */
@@ -32,7 +32,7 @@ interface StoredProduct {
   updatedAt: string;
 }
 
-const isServerless = process.env.VERCEL === "1" || process.env.NETLIFY === "true";
+const isNetlify = process.env.NETLIFY === "true";
 
 // ---------------------------------------------------------------------------
 // File-system helpers (local only)
@@ -68,7 +68,7 @@ function writeFile(records: StoredProduct[]) {
     fs.mkdirSync(require("path").dirname(dataFile), { recursive: true });
     fs.writeFileSync(dataFile, JSON.stringify(records, null, 2), "utf-8");
   } catch {
-    // Vercel / read-only filesystem — silently skip
+    // Netlify / read-only filesystem — silently skip
   }
 }
 
@@ -82,7 +82,7 @@ function deleteFile() {
 }
 
 // ---------------------------------------------------------------------------
-// In-memory store (used on Vercel; also serves as the working copy locally)
+// In-memory store (used on Netlify; also serves as the working copy locally)
 // ---------------------------------------------------------------------------
 
 let memoryStore: StoredProduct[] | null = null;
@@ -102,7 +102,7 @@ function seedMemory(): StoredProduct[] {
 function load(): StoredProduct[] {
   if (memoryStore) return memoryStore;
 
-  if (isServerless) {
+  if (isNetlify) {
     return seedMemory();
   }
 
@@ -122,7 +122,7 @@ function load(): StoredProduct[] {
 // Always persist writes to file when possible (no-op on serverless)
 function persist(records: StoredProduct[]) {
   memoryStore = records;
-  if (!isServerless) writeFile(records);
+  if (!isNetlify) writeFile(records);
 }
 
 // ---------------------------------------------------------------------------
