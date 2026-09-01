@@ -1,26 +1,22 @@
+import { eq } from "drizzle-orm";
 import { pbkdf2Sync, timingSafeEqual } from "crypto";
-
-interface AdminUser {
-  id: string;
-  name: string;
-  email: string;
-  role: "admin";
-}
+import { db } from "@/db";
+import { adminUsers } from "@/db/schema";
 
 /**
  * Customers do not have accounts — they shop as guests.
  * Only the store admin authenticates.
  *
- * Admin credentials are provided exclusively through environment variables:
- *   ADMIN_EMAIL            admin email (e.g. admin@apfashionmart.com)
- *   ADMIN_PASSWORD_HASH    PBKDF2-SHA256 hash of the admin password, generated with:
- *                          node scripts/hash-admin-password.mjs "<password>"
+ * Admin accounts live in the `admin_users` table in the Netlify Database.
+ * The table is seeded by a migration (netlify/database/migrations) with the
+ * store operator's credentials. Passwords are stored exclusively as
+ * PBKDF2-SHA256 hashes in the format:
+ *   pbkdf2:sha256:<iterations>:<salt-base64>:<hash-base64>
+ * produced by `node scripts/hash-admin-password.mjs "<password>"`.
  *
- * No password is ever stored in source code. If either variable is missing,
- * admin sign-in is disabled.
+ * The plaintext password is never stored. If the table has no matching
+ * account, sign-in is rejected.
  */
-const adminEmail = (process.env.ADMIN_EMAIL ?? "").trim().toLowerCase();
-const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH ?? "";
 
 /**
  * Constant-time verification of a password against a PBKDF2-SHA256 hash in the format:
@@ -44,33 +40,29 @@ function verifyPasswordHash(password: string, stored: string): boolean {
 }
 
 export async function verifyCredentials(email: string, password: string) {
-  if (!adminEmail || !adminPasswordHash) return null;
-  if (email.trim().toLowerCase() !== adminEmail) return null;
-  if (!verifyPasswordHash(password, adminPasswordHash)) return null;
+  const normalized = email.trim().toLowerCase();
 
-  return {
-    id: "admin-1",
-    name: "Admin",
-    email: adminEmail,
-    role: "admin" as const,
-  };
+  try {
+    const rows = await db
+      .select()
+      .from(adminUsers)
+      .where(eq(adminUsers.email, normalized))
+      .limit(1);
+
+    const account = rows[0];
+    if (!account) return null;
+    if (!verifyPasswordHash(password, account.passwordHash)) return null;
+
+    return {
+      id: account.id,
+      name: account.name,
+      email: account.email,
+      role: account.role,
+    };
+  } catch (error) {
+    console.error("verifyCredentials: database lookup failed", error);
+    return null;
+  }
 }
 
-export function ensureSeededAdmin() {
-  // Admin is configured entirely via environment variables; nothing to seed.
-  return;
-}
-
-// Kept for parity with any tooling that expects a users list (no secrets included).
-export function getUsers() {
-  return [
-    {
-      id: "admin-1",
-      name: "Admin",
-      email: adminEmail || "admin",
-      role: "admin" as const,
-    },
-  ];
-}
-
-export type { AdminUser };
+export type { AdminUserRow } from "@/db/schema";

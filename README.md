@@ -47,7 +47,7 @@ There is no cart, no checkout and no customer account — ordering is instant an
 | Language | TypeScript |
 | Styling | Tailwind CSS 3 |
 | State | Zustand (toasts) |
-| Data | Local JSON file store (`data/products.json`) + local product seed data (no database) |
+| Data | Netlify Database (managed Postgres) via Drizzle ORM |
 | Auth | NextAuth.js v5 (local users) |
 | Orders | WhatsApp + Cash on Delivery |
 | Images | Local seed images |
@@ -98,59 +98,40 @@ npm run dev
 
 ### Secure Admin Setup
 
-The admin password is **never stored in source code**. There are no default or demo
-credentials — admin sign-in only works when `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH`
-are present in the environment. If either is missing, `/auth/login` rejects all attempts.
+The admin account lives in the `admin_users` table of the Netlify Database. It is
+created by the seed migration (`netlify/database/migrations/..._seed_admin_user.sql`),
+which stores only a PBKDF2-SHA256 hash of the password — the plaintext is never
+stored anywhere.
 
-1. Create a `.env` file (already git-ignored) with a strong admin email:
+To change the admin password:
 
-   ```
-   ADMIN_EMAIL=admin@apfashionmart.com
-   ```
-
-2. Generate a PBKDF2-SHA256 hash of a unique, strong password (this hash is what gets
-   stored — the plaintext is only typed once to create it):
+1. Generate a hash of the new password:
 
    ```bash
-   npm run hash:admin -- "your-very-strong-password"
-   # 1) runs: node scripts/hash-admin-password.mjs "<password>"
-   # 2) copies the printed ADMIN_PASSWORD_HASH=... line into .env
+   node scripts/hash-admin-password.mjs "<new-password>"
    ```
 
-3. Example `.env`:
+2. Update (or insert) the admin row with the new hash — e.g. via a new database
+   migration. Deploy, and sign in at `/auth/login` with the admin email and the
+   new password.
 
-   ```
-   ADMIN_EMAIL=admin@apfashionmart.com
-   ADMIN_PASSWORD_HASH=pbkdf2:sha256:310000:9r4ZY2RgAw==:3f8p9A==
-   NEXTAUTH_SECRET=<long random string>
-   ```
-
-4. Verify: sign in at `/auth/login`. Wrong password and missing env vars are both
-   rejected server-side.
-
-Notes:
-
-- `npm run dev` loads `.env` automatically. For `npm run start` (production), export the
-  same variables in the shell that launches the server.
-- `.env` and `.env.local` are git-ignored — never commit them.
-- Passwords are compared with a constant-time check (PBKDF2-SHA256, 310k iterations,
-  random 16-byte salt). Neither the password nor the hash leaves the server.
-
-> Customers do not need an account — they shop as guests and order directly via WhatsApp.
-> Admins sign in through `/auth/login` to reach the protected dashboard.
+Passwords are compared with a constant-time check (PBKDF2-SHA256, 310k iterations,
+random 16-byte salt). Customers do not need an account — they shop as guests and
+order directly via WhatsApp. Admins sign in through `/auth/login` to reach the
+protected dashboard.
 
 ## Environment Variables
 
-No database is required. Admin sign-in additionally needs the two admin variables below
-(`ADMIN_EMAIL` + `ADMIN_PASSWORD_HASH`); without them the admin login is disabled.
+No manual setup is required for the database — the Netlify Database is provisioned
+automatically and migrations (including the admin account seed) are applied at deploy
+time. Admin sign-in additionally uses the `ADMIN_EMAIL` + password hash stored in the
+database; see [Secure admin setup](#secure-admin-setup) below.
 
 | Variable | Description |
 |----------|------------|
 | `NEXTAUTH_SECRET` | Long random secret for NextAuth/session signing |
 | `NEXTAUTH_URL` | App URL (http://localhost:3000 for dev) |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp number (default: 919370549753) |
-| `ADMIN_EMAIL` | Admin login email |
-| `ADMIN_PASSWORD_HASH` | PBKDF2-SHA256 hash of the admin password (see Secure Admin Setup) |
 
 The WhatsApp destination is `+91 93705 49753` and is defined in `lib/whatsapp.ts`.
 To change it, update `WHATSAPP_NUMBER` there.

@@ -1,7 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
+import NextAuth from "next-auth";
+import { baseAuthConfig } from "@/lib/auth";
 
 const ADMIN_PREFIX = "/admin";
+
+// Lightweight edge-safe auth instance: verifies the JWT session cookie without
+// importing the database-backed credentials provider (Node-only).
+const { auth } = NextAuth(baseAuthConfig);
 
 export default auth((req) => {
   const isAdminRoute =
