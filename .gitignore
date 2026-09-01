@@ -43,3 +43,6 @@ next-env.d.ts
 
 # admin-uploaded product images (kept locally)
 /public/product-assets/
+
+# Local Netlify folder
+.netlify
