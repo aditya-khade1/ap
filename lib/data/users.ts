@@ -1,5 +1,3 @@
-import { pbkdf2Sync, timingSafeEqual } from "crypto";
-
 interface AdminUser {
   id: string;
   name: string;
@@ -34,6 +32,8 @@ function verifyPasswordHash(password: string, stored: string): boolean {
 
   const iterations = parseInt(iterationsStr, 10);
   if (!Number.isFinite(iterations) || iterations <= 0) return false;
+
+  const { pbkdf2Sync, timingSafeEqual } = require("crypto") as typeof import("crypto");
 
   const salt = Buffer.from(saltB64, "base64");
   const expected = Buffer.from(hashB64, "base64");
