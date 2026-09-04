@@ -9,7 +9,7 @@ interface ImageUploaderProps {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm outline-none focus:border-ink";
+  "w-full rounded-xl border border-line px-4 py-2.5 text-sm outline-none focus:border-brand-dark";
 
 export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
   const fileInput = useRef<HTMLInputElement>(null);
@@ -65,11 +65,11 @@ export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
         {value.map((url, i) => (
           <div
             key={`${url}-${i}`}
-            className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-black/10 bg-sand"
+            className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-line bg-sand"
           >
             <img src={url} alt={`Product image ${i + 1}`} className="h-full w-full object-cover" />
             {i === 0 && (
-              <span className="absolute left-2 top-2 rounded-full bg-ink px-2 py-0.5 text-[10px] font-bold text-white">
+              <span className="absolute left-2 top-2 rounded-full bg-brand-dark px-2 py-0.5 text-[10px] font-bold text-white">
                 Cover
               </span>
             )}
@@ -88,7 +88,7 @@ export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
                 type="button"
                 onClick={() => removeImage(url)}
                 title="Remove"
-                className="grid h-8 w-8 place-items-center rounded-lg bg-white/90 text-red-500 transition hover:bg-white"
+                className="grid h-8 w-8 place-items-center rounded-lg bg-white/90 text-danger transition hover:bg-white"
               >
                 <X size={16} />
               </button>
@@ -102,7 +102,7 @@ export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
           type="button"
           onClick={() => fileInput.current?.click()}
           disabled={uploading}
-          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-dashed border-black/20 px-4 py-2.5 text-sm font-medium transition hover:border-ink disabled:opacity-50"
+          className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-dashed border-line px-4 py-2.5 text-sm font-medium transition hover:border-brand-dark disabled:opacity-50"
         >
           {uploading ? <Loader2 size={16} className="animate-spin" /> : <ImagePlus size={16} />}
           {uploading ? "Uploading..." : "Upload from computer"}
@@ -116,7 +116,7 @@ export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
           onChange={(e) => handleUpload(e.target.files)}
         />
         <div className="flex flex-1 items-center gap-2">
-          <Link2 size={16} className="shrink-0 text-black/30" />
+          <Link2 size={16} className="shrink-0 text-ink/40" />
           <input
             type="text"
             value={newUrl}
@@ -133,15 +133,15 @@ export default function ImageUploader({ value, onChange }: ImageUploaderProps) {
           <button
             type="button"
             onClick={handleAddUrl}
-            className="shrink-0 rounded-xl border border-black/10 px-4 py-2.5 text-sm font-medium hover:border-ink"
+            className="shrink-0 rounded-xl border border-line px-4 py-2.5 text-sm font-medium hover:border-brand-dark"
           >
             Add
           </button>
         </div>
       </div>
 
-      {error && <p className="mt-2 text-xs font-medium text-red-500">{error}</p>}
-      <p className="mt-2 text-xs text-black/40">
+      {error && <p className="mt-2 text-xs font-medium text-danger">{error}</p>}
+      <p className="mt-2 text-xs text-ink/50">
         Images are saved to <span className="font-medium">public/product-assets</span>. JPG,
         PNG, WEBP, GIF or AVIF, max 8MB each.
       </p>

@@ -24,7 +24,7 @@ const statusFilters = [
 function Badge({ active, label }: { active: boolean; label: string }) {
   if (!active) return null;
   return (
-    <span className="rounded-full bg-ink/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink/70">
+    <span className="rounded-full bg-brand-tint px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-dark">
       {label}
     </span>
   );
@@ -82,7 +82,7 @@ function ProductActions({ product, onChanged }: { product: IProduct; onChanged: 
       disabled={busy}
       title={title}
       className={`grid h-8 w-8 place-items-center rounded-lg transition ${
-        product[field] ? "bg-amber-100 text-amber-600" : "text-black/30 hover:bg-black/5"
+        product[field] ? "bg-warning-tint text-warning" : "text-ink/30 hover:bg-ink/5"
       }`}
     >
       <Icon size={16} fill={product[field] ? "currentColor" : "none"} />
@@ -94,14 +94,14 @@ function ProductActions({ product, onChanged }: { product: IProduct; onChanged: 
       {toggleBtn("featured", Star, "Toggle Featured")}
       <Link
         href={`/product/${product.slug}`}
-        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-black/5"
+        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-ink/5"
         title="View on site"
       >
         <Eye size={16} />
       </Link>
       <Link
         href={`/admin/products/${product._id}/edit`}
-        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-black/5"
+        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-ink/5"
         title="Edit"
       >
         <Edit size={16} />
@@ -109,7 +109,7 @@ function ProductActions({ product, onChanged }: { product: IProduct; onChanged: 
       <button
         onClick={duplicate}
         disabled={busy}
-        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-black/5 disabled:opacity-50"
+        className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-ink/5 disabled:opacity-50"
         title="Duplicate"
       >
         <Copy size={16} />
@@ -117,7 +117,7 @@ function ProductActions({ product, onChanged }: { product: IProduct; onChanged: 
       <button
         onClick={remove}
         disabled={busy}
-        className="grid h-8 w-8 place-items-center rounded-lg text-red-400 transition hover:bg-red-50 disabled:opacity-50"
+        className="grid h-8 w-8 place-items-center rounded-lg text-danger transition hover:bg-danger-tint disabled:opacity-50"
         title="Delete"
       >
         <Trash2 size={16} />
@@ -163,13 +163,13 @@ export default function AdminProductsPage() {
   const filterBar = (
     <div className="flex flex-col gap-3">
       <div className="relative">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/30" />
+        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink/40" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search products by name or SKU..."
-          className="w-full rounded-xl border border-black/10 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-ink"
+          className="w-full rounded-xl border border-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-brand-dark"
         />
       </div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -180,8 +180,8 @@ export default function AdminProductsPage() {
               onClick={() => setStatus(f.key)}
               className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition ${
                 status === f.key
-                  ? "border-ink bg-ink text-white"
-                  : "border-black/10 bg-white text-ink/60 hover:border-ink"
+                  ? "border-brand-dark bg-brand-dark text-white"
+                  : "border-line bg-white text-ink/60 hover:border-brand-dark"
               }`}
             >
               {f.label}
@@ -191,7 +191,7 @@ export default function AdminProductsPage() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-ink sm:w-auto"
+          className="w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm outline-none transition focus:border-brand-dark sm:w-auto"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
@@ -209,13 +209,13 @@ export default function AdminProductsPage() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold">Products</h1>
-          <p className="mt-1 text-sm text-black/50">
+          <p className="mt-1 text-sm text-ink/50">
             {filtered.length} of {products.length} products
           </p>
         </div>
         <Link
           href="/admin/products/new"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-ink/90"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-dark px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-deep"
         >
           <Plus size={16} /> Add Product
         </Link>
@@ -225,12 +225,12 @@ export default function AdminProductsPage() {
 
       {loading ? (
         <div className="grid min-h-[40vh] place-items-center">
-          <Loader2 size={32} className="animate-spin text-ink/30" />
+          <Loader2 size={32} className="animate-spin text-brand-dark/60" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="rounded-2xl bg-white p-12 text-center shadow-soft">
           <p className="text-base font-medium">No products found</p>
-          <p className="mt-1.5 text-sm text-black/45">
+          <p className="mt-1.5 text-sm text-ink/50">
             Try adjusting your search or filters, or add a new product.
           </p>
         </div>
@@ -241,18 +241,18 @@ export default function AdminProductsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-black/5 bg-black/[0.02]">
-                    <th className="px-4 py-3 text-left font-medium text-black/50">Product</th>
-                    <th className="px-4 py-3 text-left font-medium text-black/50">Category</th>
-                    <th className="px-4 py-3 text-left font-medium text-black/50">Price</th>
-                    <th className="px-4 py-3 text-left font-medium text-black/50">Stock</th>
-                    <th className="px-4 py-3 text-left font-medium text-black/50">Tags</th>
-                    <th className="px-4 py-3 text-right font-medium text-black/50">Actions</th>
+                  <tr className="border-b border-line bg-sand/40">
+                    <th className="px-4 py-3 text-left font-medium text-ink/50">Product</th>
+                    <th className="px-4 py-3 text-left font-medium text-ink/50">Category</th>
+                    <th className="px-4 py-3 text-left font-medium text-ink/50">Price</th>
+                    <th className="px-4 py-3 text-left font-medium text-ink/50">Stock</th>
+                    <th className="px-4 py-3 text-left font-medium text-ink/50">Tags</th>
+                    <th className="px-4 py-3 text-right font-medium text-ink/50">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filtered.map((product) => (
-                    <tr key={product._id} className="border-b border-black/5">
+                    <tr key={product._id} className="border-b border-line">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-sand">
@@ -262,15 +262,15 @@ export default function AdminProductsPage() {
                           </div>
                           <div>
                             <div className="font-medium line-clamp-1">{product.name}</div>
-                            <div className="text-xs text-black/40">{product.sku}</div>
+                            <div className="text-xs text-ink/50">{product.sku}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-black/60">{product.category}</td>
+                      <td className="px-4 py-3 text-ink/65">{product.category}</td>
                       <td className="px-4 py-3">
                         <span className="font-semibold">{formatPrice(product.price)}</span>
                         {product.originalPrice > product.price && (
-                          <span className="ml-1 text-xs text-black/30 line-through">
+                          <span className="ml-1 text-xs text-ink/45 line-through">
                             {formatPrice(product.originalPrice)}
                           </span>
                         )}
@@ -279,10 +279,10 @@ export default function AdminProductsPage() {
                         <span
                           className={`font-medium ${
                             product.stock > 10
-                              ? "text-green-600"
+                              ? "text-success"
                               : product.stock > 0
-                                ? "text-amber-600"
-                                : "text-red-500"
+                                ? "text-warning"
+                                : "text-danger"
                           }`}
                         >
                           {product.stock}
@@ -314,20 +314,20 @@ export default function AdminProductsPage() {
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[11px] uppercase tracking-wider text-black/40">
+                    <div className="text-[11px] uppercase tracking-wider text-ink/50">
                       {product.category}
                     </div>
                     <div className="mt-0.5 truncate text-sm font-semibold">{product.name}</div>
                     <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
                       <span className="font-semibold">{formatPrice(product.price)}</span>
                       {product.originalPrice > product.price && (
-                        <span className="text-xs text-black/30 line-through">
+                        <span className="text-xs text-ink/45 line-through">
                           {formatPrice(product.originalPrice)}
                         </span>
                       )}
                       <span
                         className={`text-xs font-medium ${
-                          product.stock > 0 ? "text-green-600" : "text-red-500"
+                          product.stock > 0 ? "text-success" : "text-danger"
                         }`}
                       >
                         {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
@@ -338,7 +338,7 @@ export default function AdminProductsPage() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between border-t border-black/5 pt-3">
+                <div className="mt-3 flex items-center justify-between border-t border-line pt-3">
                   <ProductActions product={product} onChanged={() => fetchProducts(false)} />
                 </div>
               </div>

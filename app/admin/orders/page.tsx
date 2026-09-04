@@ -47,7 +47,7 @@ export default function AdminOrdersPage() {
   if (loading) {
     return (
       <div className="grid min-h-[60vh] place-items-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-dark border-t-transparent" />
       </div>
     );
   }
@@ -60,28 +60,28 @@ export default function AdminOrdersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-black/5 bg-black/[0.02]">
-                <th className="px-4 py-3 text-left font-medium text-black/50">Order #</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Customer</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Total</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Payment</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Status</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Date</th>
+              <tr className="border-b border-line bg-sand/40">
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Order #</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Customer</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Total</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Payment</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Status</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Date</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order._id} className="border-b border-black/5">
+                <tr key={order._id} className="border-b border-line">
                   <td className="px-4 py-3 font-medium">{order.orderNumber}</td>
                   <td className="px-4 py-3">
                     <div>{order.customerName}</div>
-                    <div className="text-xs text-black/40">{order.customerPhone}</div>
+                    <div className="text-xs text-ink/50">{order.customerPhone}</div>
                   </td>
                   <td className="px-4 py-3 font-semibold">{formatPrice(order.total)}</td>
                   <td className="px-4 py-3">
                     <span
                       className={`text-xs font-semibold ${
-                        order.paymentStatus === "paid" ? "text-green-600" : "text-amber-600"
+                        order.paymentStatus === "paid" ? "text-success" : "text-warning"
                       }`}
                     >
                       {order.paymentMethod === "cod" ? "COD" : "Online"} - {order.paymentStatus}
@@ -91,7 +91,7 @@ export default function AdminOrdersPage() {
                     <select
                       value={order.orderStatus}
                       onChange={(e) => updateStatus(order._id, e.target.value)}
-                      className="rounded-lg border border-black/10 px-2 py-1 text-xs font-semibold outline-none"
+                      className="rounded-lg border border-line px-2 py-1 text-xs font-semibold outline-none"
                     >
                       {statuses.map((s) => (
                         <option key={s} value={s}>
@@ -100,14 +100,14 @@ export default function AdminOrdersPage() {
                       ))}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-black/50">
+                  <td className="px-4 py-3 text-ink/50">
                     {new Date(order.createdAt).toLocaleDateString("en-IN")}
                   </td>
                 </tr>
               ))}
               {orders.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-sm text-black/40">
+                  <td colSpan={6} className="px-4 py-12 text-center text-sm text-ink/50">
                     No orders yet.
                   </td>
                 </tr>

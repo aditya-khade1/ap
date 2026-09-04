@@ -32,7 +32,7 @@ interface ProductFormProps {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm outline-none transition focus:border-ink";
+  "w-full rounded-xl border border-line px-4 py-2.5 text-sm outline-none transition focus:border-brand-dark";
 
 const labelClass = "mb-1.5 block text-sm font-medium";
 
@@ -113,7 +113,7 @@ export default function ProductForm({
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl">
       {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-600">
+        <div className="mb-4 rounded-xl border border-danger/30 bg-danger-tint p-3 text-sm text-danger">
           {error}
         </div>
       )}
@@ -184,7 +184,7 @@ export default function ProductForm({
               className={inputClass}
             />
             {discount > 0 && (
-              <p className="mt-1.5 text-xs font-semibold text-green-600">
+              <p className="mt-1.5 text-xs font-semibold text-success">
                 {discount}% discount will be shown
               </p>
             )}
@@ -255,17 +255,17 @@ export default function ProductForm({
           </div>
         </div>
 
-        <div className="border-t border-black/5 pt-4">
-          <label className="flex max-w-xs items-center gap-2.5 rounded-xl border border-black/10 px-3.5 py-3 text-sm font-medium transition hover:border-ink">
+        <div className="border-t border-line pt-4">
+          <label className="flex max-w-xs items-center gap-2.5 rounded-xl border border-line px-3.5 py-3 text-sm font-medium transition hover:border-brand-dark">
             <input
               type="checkbox"
               checked={featured}
               onChange={(e) => setFeatured(e.target.checked)}
-              className="h-4 w-4 accent-ink"
+              className="h-4 w-4 accent-brand-dark"
             />
             Featured
           </label>
-          <p className="mt-2 text-xs text-black/40">
+          <p className="mt-2 text-xs text-ink/50">
             URL: <span className="font-mono">/{slug.trim() || autoSlug || "product-slug"}</span>
           </p>
         </div>
@@ -275,14 +275,14 @@ export default function ProductForm({
         <button
           type="submit"
           disabled={busy}
-          className="rounded-full bg-ink px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-ink/90 disabled:opacity-50"
+          className="rounded-full bg-brand-dark px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-deep disabled:opacity-50"
         >
           {busy ? busyLabel : submitLabel}
         </button>
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-full border border-black/15 px-8 py-3.5 text-sm font-semibold transition hover:border-ink"
+          className="rounded-full border border-line px-8 py-3.5 text-sm font-semibold transition hover:border-brand-dark"
         >
           Cancel
         </button>

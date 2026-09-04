@@ -34,16 +34,16 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="grid min-h-[60vh] place-items-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-dark border-t-transparent" />
       </div>
     );
   }
 
   const statCards = [
-    { label: "Total Products", value: stats?.totalProducts || 0, icon: Package, color: "bg-blue-50 text-blue-600" },
-    { label: "Total Orders", value: stats?.totalOrders || 0, icon: ShoppingCart, color: "bg-green-50 text-green-600" },
-    { label: "Total Customers", value: stats?.totalCustomers || 0, icon: Users, color: "bg-purple-50 text-purple-600" },
-    { label: "Total Revenue", value: formatPrice(stats?.totalRevenue || 0), icon: IndianRupee, color: "bg-amber-50 text-amber-600" },
+    { label: "Total Products", value: stats?.totalProducts || 0, icon: Package, color: "bg-sky-tint text-sky-deep" },
+    { label: "Total Orders", value: stats?.totalOrders || 0, icon: ShoppingCart, color: "bg-success-tint text-success" },
+    { label: "Total Customers", value: stats?.totalCustomers || 0, icon: Users, color: "bg-brand-tint text-brand-dark" },
+    { label: "Total Revenue", value: formatPrice(stats?.totalRevenue || 0), icon: IndianRupee, color: "bg-warning-tint text-warning" },
   ];
 
   return (
@@ -55,7 +55,7 @@ export default function AdminDashboard() {
           <div key={card.label} className="rounded-2xl bg-white p-6 shadow-soft">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-black/50">{card.label}</p>
+                <p className="text-sm text-ink/50">{card.label}</p>
                 <p className="mt-1 font-serif text-2xl font-bold">{card.value}</p>
               </div>
               <div className={`grid h-12 w-12 place-items-center rounded-xl ${card.color}`}>
@@ -72,17 +72,17 @@ export default function AdminDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-black/5">
-                  <th className="pb-3 text-left font-medium text-black/50">Order #</th>
-                  <th className="pb-3 text-left font-medium text-black/50">Customer</th>
-                  <th className="pb-3 text-left font-medium text-black/50">Total</th>
-                  <th className="pb-3 text-left font-medium text-black/50">Status</th>
-                  <th className="pb-3 text-left font-medium text-black/50">Date</th>
+                <tr className="border-b border-line">
+                  <th className="pb-3 text-left font-medium text-ink/50">Order #</th>
+                  <th className="pb-3 text-left font-medium text-ink/50">Customer</th>
+                  <th className="pb-3 text-left font-medium text-ink/50">Total</th>
+                  <th className="pb-3 text-left font-medium text-ink/50">Status</th>
+                  <th className="pb-3 text-left font-medium text-ink/50">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {stats.recentOrders.map((order) => (
-                  <tr key={order._id} className="border-b border-black/5">
+                  <tr key={order._id} className="border-b border-line">
                     <td className="py-3 font-medium">{order.orderNumber}</td>
                     <td className="py-3">{order.customerName}</td>
                     <td className="py-3 font-semibold">{formatPrice(order.total)}</td>
@@ -90,16 +90,16 @@ export default function AdminDashboard() {
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                           order.orderStatus === "delivered"
-                            ? "bg-green-50 text-green-600"
+                            ? "bg-success-tint text-success"
                             : order.orderStatus === "cancelled"
-                              ? "bg-red-50 text-red-600"
-                              : "bg-amber-50 text-amber-600"
+                              ? "bg-danger-tint text-danger"
+                              : "bg-warning-tint text-warning"
                         }`}
                       >
                         {order.orderStatus}
                       </span>
                     </td>
-                    <td className="py-3 text-black/50">
+                    <td className="py-3 text-ink/50">
                       {new Date(order.createdAt).toLocaleDateString("en-IN")}
                     </td>
                   </tr>
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
             </table>
           </div>
         ) : (
-          <p className="text-sm text-black/40">No orders yet.</p>
+          <p className="text-sm text-ink/50">No orders yet.</p>
         )}
       </div>
     </div>

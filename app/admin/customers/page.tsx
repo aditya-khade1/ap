@@ -27,7 +27,7 @@ export default function AdminCustomersPage() {
   if (loading) {
     return (
       <div className="grid min-h-[60vh] place-items-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-ink border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-dark border-t-transparent" />
       </div>
     );
   }
@@ -40,24 +40,24 @@ export default function AdminCustomersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-black/5 bg-black/[0.02]">
-                <th className="px-4 py-3 text-left font-medium text-black/50">Name</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Phone</th>
-                <th className="px-4 py-3 text-left font-medium text-black/50">Orders</th>
+              <tr className="border-b border-line bg-sand/40">
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Name</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Phone</th>
+                <th className="px-4 py-3 text-left font-medium text-ink/50">Orders</th>
               </tr>
             </thead>
             <tbody>
               {customers.map((customer) => (
-                <tr key={customer._id} className="border-b border-black/5">
+                <tr key={customer._id} className="border-b border-line">
                   <td className="px-4 py-3 font-medium">{customer.name}</td>
-                  <td className="px-4 py-3 text-black/60">{customer.phone || "-"}</td>
-                  <td className="px-4 py-3 text-black/60">{customer.orders}</td>
+                  <td className="px-4 py-3 text-ink/65">{customer.phone || "-"}</td>
+                  <td className="px-4 py-3 text-ink/65">{customer.orders}</td>
                 </tr>
               ))}
               {customers.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="px-4 py-12 text-center text-sm text-black/40">
-                    <Users size={40} className="mx-auto mb-3 text-black/10" />
+                  <td colSpan={3} className="px-4 py-12 text-center text-sm text-ink/50">
+                    <Users size={40} className="mx-auto mb-3 text-ink/10" />
                     No customers yet.
                   </td>
                 </tr>

@@ -27,7 +27,7 @@ export default function NewProductPage() {
     <div>
       <button
         onClick={() => router.push("/admin/products")}
-        className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-black/50 transition hover:text-ink"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-ink/50 transition hover:text-ink"
       >
         <ArrowLeft size={16} /> Back to products
       </button>

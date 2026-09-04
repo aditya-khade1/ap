@@ -59,7 +59,7 @@ export default function EditProductPage({
   if (loading) {
     return (
       <div className="grid min-h-[60vh] place-items-center">
-        <Loader2 size={32} className="animate-spin text-ink/30" />
+        <Loader2 size={32} className="animate-spin text-brand-dark/60" />
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default function EditProductPage({
     return (
       <div className="rounded-2xl bg-white p-12 text-center shadow-soft">
         <h1 className="font-serif text-3xl font-bold">Product Not Found</h1>
-        <p className="mt-2 text-sm text-black/45">
+        <p className="mt-2 text-sm text-ink/50">
           This product may have been deleted.
         </p>
       </div>
@@ -79,7 +79,7 @@ export default function EditProductPage({
     <div>
       <button
         onClick={() => router.push("/admin/products")}
-        className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-black/50 transition hover:text-ink"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-ink/50 transition hover:text-ink"
       >
         <ArrowLeft size={16} /> Back to products
       </button>

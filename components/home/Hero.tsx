@@ -1,35 +1,36 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 import { store, categories } from "@/lib/store";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-ink text-white">
-      <div className="absolute inset-0 opacity-15">
-        <Image
-          src="/images/saree-1.png"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          aria-hidden
+    <section className="relative overflow-hidden bg-black text-white">
+      <div className="absolute inset-0">
+        <video
+          src="/5561749-uhd_3840_2160_25fps.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+          aria-hidden="true"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/95 via-ink/85 to-ink/95 md:bg-gradient-to-r md:from-ink/95 md:via-ink/85 md:to-ink/95" />
+      {/* Clean, premium dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
 
       <div className="relative mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:py-28">
         <div className="text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] uppercase tracking-[0.2em] sm:text-xs">
             <Sparkles size={14} /> New season styles
           </div>
-          <h1 className="mx-auto max-w-2xl font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl">
+          <h1 className="mx-auto max-w-2xl font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl drop-shadow-lg">
             Everyday fashion,{" "}
             <span className="text-sky">beautifully chosen.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/75 sm:text-lg lg:text-xl">
+          <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/90 sm:text-lg lg:text-xl drop-shadow-md">
             Discover sarees, kids wear, jewellery, bangles and night suits — all
             in one trusted family fashion store.
           </p>
