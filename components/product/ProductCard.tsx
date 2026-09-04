@@ -45,18 +45,18 @@ export default function ProductCard({ product }: { product: IProduct }) {
             />
           )}
           {discount > 0 && (
-            <span className="absolute left-3 top-3 rounded-full bg-rose px-2.5 py-1 text-[11px] font-bold text-white">
+            <span className="absolute left-3 top-3 rounded-full bg-brand-dark px-2.5 py-1 text-[11px] font-bold text-white">
               {discount}% OFF
             </span>
           )}
         </div>
       </Link>
       <div className="p-3 sm:p-4">
-        <div className="text-[11px] uppercase tracking-wider text-black/40">
+        <div className="text-[11px] uppercase tracking-wider text-ink/50">
           {product.category}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="mt-1 text-sm font-medium line-clamp-1 transition hover:text-rose">
+          <h3 className="mt-1 text-sm font-medium line-clamp-1 transition hover:text-brand-dark">
             {product.name}
           </h3>
         </Link>
@@ -65,7 +65,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
             {formatPrice(product.price)}
           </span>
           {product.originalPrice > product.price && (
-            <span className="text-sm text-black/30 line-through">
+            <span className="text-sm text-ink/45 line-through">
               {formatPrice(product.originalPrice)}
             </span>
           )}
@@ -75,7 +75,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
             href={orderUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-green-600 px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-green-700"
+            className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-whatsapp px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-whatsapp-deep"
           >
             <ShoppingBag size={15} /> Order on WhatsApp
           </a>
@@ -83,7 +83,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
             href={enquireUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-black/10 bg-white px-3 py-2.5 text-xs font-semibold text-ink transition hover:border-ink"
+            className="flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-line bg-white px-3 py-2.5 text-xs font-semibold text-ink transition hover:border-brand-dark"
           >
             <MessageCircle size={15} /> Enquire
           </a>

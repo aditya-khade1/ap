@@ -15,10 +15,10 @@ export default function ToastContainer() {
           key={toast.id}
           className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium shadow-medium animate-slide-in ${
             toast.type === "success"
-              ? "bg-ink text-white"
+              ? "bg-brand-dark text-white"
               : toast.type === "error"
-                ? "bg-red-600 text-white"
-                : "bg-white text-ink border border-black/10"
+                ? "bg-danger text-white"
+                : "bg-white text-ink border border-line"
           }`}
         >
           {toast.type === "success" && <CheckCircle size={18} />}

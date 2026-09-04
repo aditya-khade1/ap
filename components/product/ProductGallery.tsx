@@ -78,8 +78,8 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
               onClick={() => setSelectedIndex(i)}
               className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition ${
                 i === selectedIndex
-                  ? "border-ink"
-                  : "border-transparent hover:border-black/20"
+                  ? "border-brand-dark"
+                  : "border-transparent hover:border-ink/20"
               }`}
             >
               <Image

@@ -7,12 +7,12 @@ export default function FeaturedCategories() {
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-rose">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
             Shop by category
           </p>
           <h2 className="mt-2 font-serif text-4xl">Something for everyone</h2>
         </div>
-        <p className="max-w-md text-sm leading-6 text-black/55">
+        <p className="max-w-md text-sm leading-6 text-ink/60">
           A curated mix for celebrations, everyday dressing, children and finishing touches.
         </p>
       </div>

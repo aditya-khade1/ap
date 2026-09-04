@@ -37,7 +37,7 @@ export default function CategoryPage() {
     return (
       <div className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
         <h1 className="font-serif text-4xl">Category Not Found</h1>
-        <p className="mt-4 text-black/55">The category you&apos;re looking for doesn&apos;t exist.</p>
+        <p className="mt-4 text-ink/65">The category you&apos;re looking for doesn&apos;t exist.</p>
       </div>
     );
   }
@@ -45,11 +45,11 @@ export default function CategoryPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-rose">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
           Category
         </p>
         <h1 className="mt-2 font-serif text-4xl">{category.name}</h1>
-        <p className="mt-2 text-black/55">{category.description}</p>
+        <p className="mt-2 text-ink/65">{category.description}</p>
       </div>
 
       {loading ? (
@@ -61,7 +61,7 @@ export default function CategoryPage() {
       ) : products.length === 0 ? (
         <div className="rounded-2xl bg-white p-12 text-center">
           <p className="text-lg font-medium">No products in this category yet</p>
-          <p className="mt-2 text-sm text-black/45">
+          <p className="mt-2 text-sm text-ink/50">
             Check back soon for new arrivals.
           </p>
         </div>

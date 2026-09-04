@@ -82,12 +82,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     return (
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="aspect-[4/5] animate-pulse rounded-2xl bg-black/5" />
+          <div className="aspect-[4/5] animate-pulse rounded-2xl bg-ink/5" />
           <div className="space-y-4">
-            <div className="h-4 w-20 animate-pulse rounded bg-black/5" />
-            <div className="h-8 w-3/4 animate-pulse rounded bg-black/5" />
-            <div className="h-6 w-32 animate-pulse rounded bg-black/5" />
-            <div className="h-20 w-full animate-pulse rounded bg-black/5" />
+            <div className="h-4 w-20 animate-pulse rounded bg-ink/5" />
+            <div className="h-8 w-3/4 animate-pulse rounded bg-ink/5" />
+            <div className="h-6 w-32 animate-pulse rounded bg-ink/5" />
+            <div className="h-20 w-full animate-pulse rounded bg-ink/5" />
           </div>
         </div>
       </div>
@@ -98,12 +98,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     return (
       <div className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
         <h1 className="font-serif text-4xl">Product Not Found</h1>
-        <p className="mt-4 text-black/55">
+        <p className="mt-4 text-ink/65">
           The product you&apos;re looking for doesn&apos;t exist or has been removed.
         </p>
         <Link
           href="/shop"
-          className="mt-6 inline-flex rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white"
+          className="mt-6 inline-flex rounded-full bg-brand-dark px-6 py-3 text-sm font-semibold text-white"
         >
           Back to Shop
         </Link>
@@ -121,7 +121,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Breadcrumb */}
-      <nav className="mb-6 text-sm text-black/40">
+      <nav className="mb-6 text-sm text-ink/50">
         <Link href="/" className="hover:text-ink">Home</Link>
         <span className="mx-2">/</span>
         <Link href="/shop" className="hover:text-ink">Shop</Link>
@@ -137,7 +137,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         <ProductGallery images={product.images} name={product.name} />
 
         <div className="flex flex-col">
-          <div className="text-xs uppercase tracking-wider text-black/40">
+          <div className="text-xs uppercase tracking-wider text-ink/50">
             {product.category}{product.subcategory ? ` / ${product.subcategory}` : ""}
           </div>
           <h1 className="mt-2 font-serif text-3xl sm:text-4xl">{product.name}</h1>
@@ -146,17 +146,17 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <span className="font-serif text-3xl font-bold">{formatPrice(product.price)}</span>
             {discount > 0 && (
               <>
-                <span className="text-lg text-black/30 line-through">
+                <span className="text-lg text-ink/45 line-through">
                   {formatPrice(product.originalPrice)}
                 </span>
-                <span className="rounded-full bg-rose/10 px-3 py-1 text-sm font-semibold text-rose">
+                <span className="rounded-full bg-brand-tint px-3 py-1 text-sm font-semibold text-brand-dark">
                   {discount}% OFF
                 </span>
               </>
             )}
           </div>
 
-          <p className="mt-6 leading-7 text-black/65">{product.description}</p>
+          <p className="mt-6 leading-7 text-ink/70">{product.description}</p>
 
           {/* Sizes */}
           {product.sizes.length > 0 && (
@@ -169,8 +169,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     onClick={() => setSelectedSize(s)}
                     className={`min-w-[3rem] rounded-xl border px-4 py-2 text-sm font-medium transition ${
                       selectedSize === s
-                        ? "border-ink bg-ink text-white"
-                        : "border-black/15 hover:border-ink"
+                        ? "border-brand-dark bg-brand-dark text-white"
+                        : "border-line hover:border-brand-dark"
                     }`}
                   >
                     {s}
@@ -193,8 +193,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     onClick={() => setSelectedColor(c)}
                     className={`rounded-xl border px-4 py-2 text-sm font-medium transition ${
                       selectedColor === c
-                        ? "border-ink bg-ink text-white"
-                        : "border-black/15 hover:border-ink"
+                        ? "border-brand-dark bg-brand-dark text-white"
+                        : "border-line hover:border-brand-dark"
                     }`}
                   >
                     {c}
@@ -207,18 +207,18 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           {/* Stock Status */}
           <div className="mt-5">
             {inStock ? (
-              <span className="flex items-center gap-1.5 text-sm text-green-600">
+              <span className="flex items-center gap-1.5 text-sm text-success">
                 <Check size={16} /> In Stock ({product.stock} available)
               </span>
             ) : (
-              <span className="text-sm text-red-500">Out of Stock</span>
+              <span className="text-sm text-danger">Out of Stock</span>
             )}
           </div>
 
           {/* Quantity */}
           <div className="mt-6">
             <h3 className="mb-3 text-sm font-semibold">Quantity</h3>
-            <div className="inline-flex items-center rounded-xl border border-black/15">
+            <div className="inline-flex items-center rounded-xl border border-line">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 className="grid h-11 w-11 place-items-center transition hover:bg-black/5"
@@ -240,23 +240,23 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <button
               onClick={handleOrderOnWhatsApp}
               disabled={!inStock}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-whatsapp px-6 py-4 text-sm font-semibold text-white transition hover:bg-whatsapp-deep disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <MessageCircle size={18} /> Order on WhatsApp
             </button>
-              <span className="text-center text-xs text-green-700">
+              <span className="text-center text-xs text-success">
                 Pay when your order arrives
               </span>
           </div>
 
           {/* Trust Badges */}
-          <div className="mt-8 grid max-w-sm grid-cols-2 gap-4 border-t border-black/5 pt-6">
+          <div className="mt-8 grid max-w-sm grid-cols-2 gap-4 border-t border-line pt-6">
             <div className="text-center">
-              <Truck size={20} className="mx-auto text-rose" />
+              <Truck size={20} className="mx-auto text-brand-dark" />
               <div className="mt-2 text-xs font-medium">Fast Delivery</div>
             </div>
             <div className="text-center">
-              <Shield size={20} className="mx-auto text-rose" />
+              <Shield size={20} className="mx-auto text-brand-dark" />
               <div className="mt-2 text-xs font-medium">Secure Payment</div>
             </div>
           </div>

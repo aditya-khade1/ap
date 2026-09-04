@@ -79,7 +79,7 @@ function ShopContent() {
           <button
             onClick={() => { setCategory(""); setPage(1); }}
             className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition ${
-              !category ? "bg-ink text-white" : "hover:bg-black/5"
+              !category ? "bg-brand-dark text-white" : "hover:bg-ink/5"
             }`}
           >
             All Categories
@@ -89,7 +89,7 @@ function ShopContent() {
               key={cat.slug}
               onClick={() => { setCategory(cat.name); setPage(1); }}
               className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition ${
-                category === cat.name ? "bg-ink text-white" : "hover:bg-black/5"
+                category === cat.name ? "bg-brand-dark text-white" : "hover:bg-black/5"
               }`}
             >
               {cat.name}
@@ -105,7 +105,7 @@ function ShopContent() {
             onClick={() => { setPriceRange({ min: 0, max: 999999 }); setPage(1); }}
             className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition ${
               priceRange.max === 999999 && priceRange.min === 0
-                ? "bg-ink text-white"
+                ? "bg-brand-dark text-white"
                 : "hover:bg-black/5"
             }`}
           >
@@ -117,7 +117,7 @@ function ShopContent() {
               onClick={() => { setPriceRange({ min: range.min, max: range.max }); setPage(1); }}
               className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition ${
                 priceRange.min === range.min && priceRange.max === range.max
-                  ? "bg-ink text-white"
+                  ? "bg-brand-dark text-white"
                   : "hover:bg-black/5"
               }`}
             >
@@ -136,8 +136,8 @@ function ShopContent() {
               onClick={() => { setSize(size === s ? "" : s); setPage(1); }}
               className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                 size === s
-                  ? "border-ink bg-ink text-white"
-                  : "border-black/15 hover:border-ink"
+                  ? "border-brand-dark bg-brand-dark text-white"
+                  : "border-line hover:border-brand-dark"
               }`}
             >
               {s}
@@ -152,7 +152,7 @@ function ShopContent() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
         <h1 className="font-serif text-4xl">Shop</h1>
-        <p className="mt-2 text-black/55">
+        <p className="mt-2 text-ink/65">
           Browse our complete collection across all categories.
         </p>
       </div>
@@ -164,14 +164,14 @@ function ShopContent() {
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }}
             placeholder="Search products..."
-            className="w-full rounded-xl border border-black/10 bg-white px-4 py-2.5 pl-10 text-sm outline-none transition focus:border-ink"
+            className="w-full rounded-xl border border-line bg-white px-4 py-2.5 pl-10 text-sm outline-none transition focus:border-brand-dark"
           />
-          <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileFilters(true)}
-            className="flex items-center gap-2 rounded-xl border border-black/10 bg-white px-4 py-2.5 text-sm font-medium lg:hidden"
+            className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-2.5 text-sm font-medium lg:hidden"
           >
             <SlidersHorizontal size={16} /> Filters
           </button>
@@ -179,7 +179,7 @@ function ShopContent() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="appearance-none rounded-xl border border-black/10 bg-white px-4 py-2.5 pr-8 text-sm font-medium outline-none"
+              className="appearance-none rounded-xl border border-line bg-white px-4 py-2.5 pr-8 text-sm font-medium outline-none"
             >
               <option value="newest">Newest</option>
               <option value="price-low">Price: Low to High</option>
@@ -201,7 +201,7 @@ function ShopContent() {
           {hasActiveFilters && (
             <div className="mb-4 flex flex-wrap items-center gap-2">
               {category && (
-                <span className="flex items-center gap-1 rounded-full bg-ink/5 px-3 py-1 text-xs font-medium">
+                <span className="flex items-center gap-1 rounded-full bg-brand-tint px-3 py-1 text-xs font-medium text-brand-dark">
                   {category}
                   <button onClick={() => setCategory("")}>
                     <X size={12} />
@@ -209,7 +209,7 @@ function ShopContent() {
                 </span>
               )}
               {size && (
-                <span className="flex items-center gap-1 rounded-full bg-ink/5 px-3 py-1 text-xs font-medium">
+                <span className="flex items-center gap-1 rounded-full bg-brand-tint px-3 py-1 text-xs font-medium text-brand-dark">
                   Size: {size}
                   <button onClick={() => setSize("")}>
                     <X size={12} />
@@ -218,7 +218,7 @@ function ShopContent() {
               )}
               <button
                 onClick={clearFilters}
-                className="text-xs font-medium text-rose hover:underline"
+                className="text-xs font-medium text-brand-dark hover:underline"
               >
                 Clear All
               </button>
@@ -234,12 +234,12 @@ function ShopContent() {
           ) : products.length === 0 ? (
             <div className="rounded-2xl bg-white p-12 text-center">
               <p className="text-lg font-medium">No products found</p>
-              <p className="mt-2 text-sm text-black/45">
+              <p className="mt-2 text-sm text-ink/50">
                 Try adjusting your filters or search terms.
               </p>
               <button
                 onClick={clearFilters}
-                className="mt-4 rounded-full bg-ink px-6 py-2.5 text-sm font-semibold text-white"
+                className="mt-4 rounded-full bg-brand-dark px-6 py-2.5 text-sm font-semibold text-white"
               >
                 Clear Filters
               </button>
@@ -258,7 +258,7 @@ function ShopContent() {
                       key={p}
                       onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                       className={`grid h-10 w-10 place-items-center rounded-xl text-sm font-medium transition ${
-                        p === page ? "bg-ink text-white" : "border border-black/10 hover:bg-black/5"
+                        p === page ? "bg-brand-dark text-white" : "border border-line hover:bg-ink/5"
                       }`}
                     >
                       {p}
@@ -275,7 +275,7 @@ function ShopContent() {
 
       {mobileFilters && (
         <div className="fixed inset-0 z-[70] lg:hidden">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setMobileFilters(false)} />
+          <div className="absolute inset-0 bg-ink/40" onClick={() => setMobileFilters(false)} />
           <div className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-cream p-6 overflow-y-auto animate-slide-in">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="font-serif text-xl font-semibold">Filters</h2>
@@ -286,7 +286,7 @@ function ShopContent() {
             <FiltersContent />
             <button
               onClick={() => setMobileFilters(false)}
-              className="mt-6 w-full rounded-full bg-ink py-3 text-sm font-semibold text-white"
+              className="mt-6 w-full rounded-full bg-brand-dark py-3 text-sm font-semibold text-white"
             >
               Apply Filters
             </button>
@@ -302,7 +302,7 @@ export default function ShopPage() {
     <Suspense
       fallback={
         <div className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-ink border-t-transparent mx-auto" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-dark border-t-transparent mx-auto" />
         </div>
       }
     >

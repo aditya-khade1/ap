@@ -16,14 +16,14 @@ export default function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t border-black/5 bg-white/95 backdrop-blur lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t border-line bg-white/95 backdrop-blur lg:hidden"
       aria-label="Mobile navigation"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <Link
         href="/"
         className={`flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-[10px] font-medium ${
-          active("/") ? "text-rose" : "text-ink/55"
+          active("/") ? "text-brand-dark" : "text-ink/55"
         }`}
       >
         <Home size={22} />
@@ -36,7 +36,7 @@ export default function MobileBottomNav() {
         target="_blank"
         rel="noreferrer"
         className={`flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-[10px] font-medium ${
-          pathname === "/checkout" ? "text-rose" : "text-ink/55"
+          pathname === "/checkout" ? "text-brand-dark" : "text-ink/55"
         }`}
       >
         <MessageCircle size={22} />

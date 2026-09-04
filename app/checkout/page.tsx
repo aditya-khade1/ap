@@ -83,16 +83,16 @@ export default function CheckoutPage() {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-black/10 bg-white px-4 py-3.5 pl-11 text-base outline-none transition focus:border-ink";
+    "w-full rounded-xl border border-line bg-white px-4 py-3.5 pl-11 text-base outline-none transition focus:border-brand-dark";
 
   if (placed) {
     return (
       <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center px-6 py-16 text-center">
-        <div className="grid h-16 w-16 place-items-center rounded-full bg-green-100 text-green-600">
+        <div className="grid h-16 w-16 place-items-center rounded-full bg-success-tint text-success">
           <CheckCircle2 size={32} />
         </div>
         <h1 className="mt-6 font-serif text-3xl">Order Ready to Send!</h1>
-        <p className="mt-3 text-sm leading-6 text-black/55">
+        <p className="mt-3 text-sm leading-6 text-ink/65">
           WhatsApp should have opened with your order details. Just hit{" "}
           <strong>Send</strong> and our team will confirm your order and delivery
           details.
@@ -104,13 +104,13 @@ export default function CheckoutPage() {
             )}`}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-center gap-2 rounded-full bg-green-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-green-700"
+            className="flex items-center justify-center gap-2 rounded-full bg-whatsapp px-6 py-4 text-sm font-semibold text-white transition hover:bg-whatsapp-deep"
           >
             <MessageCircle size={18} /> Open WhatsApp Again
           </a>
           <Link
             href="/shop"
-            className="rounded-full bg-ink px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-ink/90"
+            className="rounded-full bg-brand-dark px-6 py-4 text-center text-sm font-semibold text-white transition hover:bg-brand-deep"
           >
             Continue Shopping
           </Link>
@@ -122,16 +122,16 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-6 py-16 text-center">
-        <div className="grid h-16 w-16 place-items-center rounded-full bg-black/5 text-ink">
+        <div className="grid h-16 w-16 place-items-center rounded-full bg-ink/5 text-ink">
           <IndianRupee size={26} />
         </div>
         <h1 className="mt-6 font-serif text-3xl">Your Bag is Empty</h1>
-        <p className="mt-3 text-sm leading-6 text-black/55">
+        <p className="mt-3 text-sm leading-6 text-ink/65">
           Add some products to your bag so you can place an order.
         </p>
         <Link
           href="/shop"
-          className="mt-8 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white"
+          className="mt-8 rounded-full bg-brand-dark px-6 py-3.5 text-sm font-semibold text-white"
         >
           Browse Collection
         </Link>
@@ -143,12 +143,12 @@ export default function CheckoutPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Link
         href="/shop"
-        className="mb-4 inline-flex items-center text-sm text-black/45 transition hover:text-ink"
+        className="mb-4 inline-flex items-center text-sm text-ink/50 transition hover:text-ink"
       >
         &larr; Continue Shopping
       </Link>
       <h1 className="font-serif text-3xl sm:text-4xl">Checkout</h1>
-      <p className="mt-2 text-sm text-black/55">
+      <p className="mt-2 text-sm text-ink/65">
         Fast &amp; simple — your order is confirmed over WhatsApp with Cash on
         Delivery.
       </p>
@@ -170,7 +170,7 @@ export default function CheckoutPage() {
                   Full Name
                 </label>
                 <div className="relative">
-                  <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+                  <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-ink/40" />
                   <input
                     id="name"
                     type="text"
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
                   Phone Number
                 </label>
                 <div className="relative">
-                  <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+                  <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-ink/40" />
                   <input
                     id="phone"
                     type="tel"
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                   Delivery Address
                 </label>
                 <div className="relative">
-                  <MapPin size={18} className="absolute left-4 top-4 text-black/30" />
+                  <MapPin size={18} className="absolute left-4 top-4 text-ink/40" />
                   <textarea
                     id="address"
                     value={address}
@@ -218,7 +218,7 @@ export default function CheckoutPage() {
                     placeholder="House / flat, street, area, city, state"
                     rows={3}
                     autoComplete="street-address"
-                    className="w-full rounded-xl border border-black/10 bg-white px-4 py-3.5 pl-11 text-base outline-none transition focus:border-ink resize-none"
+                    className="w-full rounded-xl border border-line bg-white px-4 py-3.5 pl-11 text-base outline-none transition focus:border-brand-dark resize-none"
                   />
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function CheckoutPage() {
                   Pincode
                 </label>
                 <div className="relative">
-                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-ink/40" />
                   <input
                     id="pincode"
                     type="text"
@@ -247,23 +247,23 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment */}
-            <div className="rounded-2xl border border-green-200 bg-green-50 p-4">
-              <div className="flex items-center gap-2 text-green-700">
+            <div className="rounded-2xl border border-success/30 bg-success-tint p-4">
+              <div className="flex items-center gap-2 text-success">
                 <CheckCircle2 size={18} />
                 <span className="font-medium">Pay on Delivery</span>
               </div>
-              <p className="mt-1 text-sm text-green-700/80">
+              <p className="mt-1 text-sm text-ink/65">
                 Pay in cash when your order is delivered.
               </p>
             </div>
 
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-green-700"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-whatsapp px-6 py-4 text-base font-semibold text-white transition hover:bg-whatsapp-deep"
             >
               <MessageCircle size={20} /> Place Order on WhatsApp
             </button>
-            <p className="text-center text-xs text-black/45">
+            <p className="text-center text-xs text-ink/50">
               You&apos;ll be redirected to WhatsApp to confirm your order. No
               online payment needed.
             </p>
@@ -290,15 +290,15 @@ export default function CheckoutPage() {
                 <div className="min-w-0 flex-1">
                   <Link
                     href={`/product/${item.slug}`}
-                    className="block truncate text-sm font-medium hover:text-rose"
+                    className="block truncate text-sm font-medium hover:text-brand-dark"
                   >
                     {item.name}
                   </Link>
-                  <div className="text-xs text-black/45">
+                  <div className="text-xs text-ink/50">
                     {formatPrice(item.price)}
                     {item.size ? ` · ${item.size}` : ""}
                   </div>
-                  <div className="mt-1 inline-flex items-center rounded-full border border-black/10">
+                  <div className="mt-1 inline-flex items-center rounded-full border border-line">
                     <button
                       onClick={() => updateQuantity(item.key, item.quantity - 1)}
                       className="grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5"
@@ -324,7 +324,7 @@ export default function CheckoutPage() {
                   </span>
                   <button
                     onClick={() => removeItem(item.key)}
-                    className="grid h-8 w-8 place-items-center rounded-full text-black/35 transition hover:bg-red-50 hover:text-red-500"
+                    className="grid h-8 w-8 place-items-center rounded-full text-ink/30 transition hover:bg-danger-tint hover:text-danger"
                     aria-label="Remove"
                   >
                     <Trash2 size={14} />
@@ -333,13 +333,13 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 flex items-center justify-between border-t border-black/5 pt-4">
-            <span className="text-sm text-black/55">Subtotal</span>
+          <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
+            <span className="text-sm text-ink/65">Subtotal</span>
             <span className="font-serif text-xl font-bold">
               {formatPrice(subtotal)}
             </span>
           </div>
-          <p className="mt-3 text-xs text-black/45">
+          <p className="mt-3 text-xs text-ink/50">
             Delivery charges and final total will be confirmed by our team on
             WhatsApp.
           </p>

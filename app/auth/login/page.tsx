@@ -42,18 +42,18 @@ export default function LoginPage() {
     <div className="mx-auto max-w-md px-4 py-16 sm:px-6 lg:px-8">
       <div className="rounded-3xl bg-white p-8 shadow-soft sm:p-10">
         <div className="mb-8 text-center">
-          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-ink text-lg font-bold text-white">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-dark text-lg font-bold text-white">
             <Lock size={22} />
           </div>
           <h1 className="mt-4 font-serif text-2xl">Admin Login</h1>
-          <p className="mt-1 text-sm text-black/50">
+          <p className="mt-1 text-sm text-ink/65">
             Sign in to manage the AP Fashion Mart store
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="rounded-xl bg-red-50 p-3 text-sm text-red-600">
+            <div className="rounded-xl bg-danger-tint p-3 text-sm text-danger">
               {error}
             </div>
           )}
@@ -64,7 +64,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm outline-none transition focus:border-ink"
+              className="w-full rounded-xl border border-line px-4 py-2.5 text-sm outline-none transition focus:border-brand-dark"
               placeholder="admin@apfashionmart.com"
             />
           </div>
@@ -76,13 +76,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-xl border border-black/10 px-4 py-2.5 pr-10 text-sm outline-none transition focus:border-ink"
+                className="w-full rounded-xl border border-line px-4 py-2.5 pr-10 text-sm outline-none transition focus:border-brand-dark"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-black/30"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/40"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -91,13 +91,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full bg-ink py-3 text-sm font-semibold text-white transition hover:bg-ink/90 disabled:opacity-50"
+            className="w-full rounded-full bg-brand-dark py-3 text-sm font-semibold text-white transition hover:bg-brand-deep disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-black/50">
+        <p className="mt-6 text-center text-sm text-ink/65">
           Customers shop without an account — no signup needed.
         </p>
       </div>

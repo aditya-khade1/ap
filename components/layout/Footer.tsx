@@ -4,7 +4,7 @@ import { Phone, MapPin, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-black/5 bg-white">
+    <footer className="border-t border-line bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -17,12 +17,12 @@ export default function Footer() {
                   className="h-12 w-auto max-w-[220px] shrink-0 object-contain"
                 />
               ) : (
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-sm font-bold text-white">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-dark text-sm font-bold text-white">
                   AP
                 </div>
               )}
             </div>
-            <p className="mt-4 text-sm leading-6 text-black/55">
+            <p className="mt-4 text-sm leading-6 text-ink/65">
               Your trusted family fashion store for sarees, kids wear, jewellery,
               bangles and night suits.
             </p>
@@ -37,7 +37,7 @@ export default function Footer() {
                 <li key={cat.slug}>
                   <Link
                     href={`/category/${cat.slug}`}
-                    className="text-sm text-black/55 transition hover:text-rose"
+                    className="text-sm text-ink/65 transition hover:text-brand-dark"
                   >
                     {cat.name}
                   </Link>
@@ -54,7 +54,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/shop"
-                  className="text-sm text-black/55 transition hover:text-rose"
+                  className="text-sm text-ink/65 transition hover:text-brand-dark"
                 >
                   Shop All
                 </Link>
@@ -66,7 +66,7 @@ export default function Footer() {
                   )}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm text-black/55 transition hover:text-rose"
+                  className="text-sm text-ink/65 transition hover:text-brand-dark"
                 >
                   Order on WhatsApp
                 </a>
@@ -74,7 +74,7 @@ export default function Footer() {
               <li>
                 <Link
                   href={store.mapUrl}
-                  className="text-sm text-black/55 transition hover:text-rose"
+                  className="text-sm text-ink/65 transition hover:text-brand-dark"
                 >
                   Get Directions
                 </Link>
@@ -82,7 +82,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/admin"
-                  className="text-sm text-black/55 transition hover:text-rose"
+                  className="text-sm text-ink/65 transition hover:text-brand-dark"
                 >
                   Admin
                 </Link>
@@ -99,7 +99,7 @@ export default function Footer() {
                 <a
                   href={`tel:${store.phone.replace(/\s/g, "")}`}
                   aria-label={`Call ${store.phone}`}
-                  className="flex items-center gap-2 text-sm text-black/55 transition hover:text-ink"
+                  className="flex items-center gap-2 text-sm text-ink/65 transition hover:text-ink"
                 >
                   <Phone size={15} /> {store.phone}
                 </a>
@@ -109,7 +109,7 @@ export default function Footer() {
                   href={store.mapUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-sm text-black/55 transition hover:text-ink"
+                  className="flex items-center gap-2 text-sm text-ink/65 transition hover:text-ink"
                 >
                   <MapPin size={15} /> Get Directions
                 </a>
@@ -121,7 +121,7 @@ export default function Footer() {
                   )}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-sm text-black/55 transition hover:text-ink"
+                  className="flex items-center gap-2 text-sm text-ink/65 transition hover:text-ink"
                 >
                   <MessageCircle size={15} /> WhatsApp Us
                 </a>
@@ -130,7 +130,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-black/5 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center text-xs text-black/40">
+        <div className="mt-10 border-t border-line pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center text-xs text-ink/50">
           &copy; {new Date().getFullYear()} {store.name}. All rights reserved.
         </div>
       </div>

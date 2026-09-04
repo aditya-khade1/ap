@@ -42,7 +42,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b border-black/5 bg-cream shadow-[0_6px_20px_-8px_rgba(33,26,24,0.18)] transition-shadow ${
+        className={`sticky top-0 z-50 border-b border-line bg-cream shadow-[0_6px_20px_-8px_rgba(33,26,24,0.18)] transition-shadow ${
           scrolled ? "shadow-[0_10px_28px_-10px_rgba(33,26,24,0.28)]" : ""
         }`}
       >
@@ -61,26 +61,11 @@ export default function Navbar() {
                 className="h-9 w-auto shrink-0 object-contain lg:h-11"
               />
             ) : (
-              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-sm font-bold text-white">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-dark text-sm font-bold text-white">
                 AP
               </div>
             )}
-            <span
-              className="shrink-0 text-ink"
-              style={{
-                display: "inline-block",
-                fontFamily: "Georgia, 'Times New Roman', serif",
-                fontSize: 20,
-                fontWeight: 400,
-                letterSpacing: 0,
-                wordSpacing: 0,
-                fontKerning: "normal",
-                fontVariantLigatures: "normal",
-                textTransform: "none",
-                whiteSpace: "nowrap",
-                lineHeight: 1.1,
-              }}
-            >
+            <span className="shrink-0 font-serif text-xl text-ink">
               AP Fashion Mart
             </span>
           </Link>
@@ -90,7 +75,7 @@ export default function Navbar() {
               <a
                 href={`tel:${store.phone.replace(/\s/g, "")}`}
                 aria-label={`Call ${store.phone}`}
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-black/10 text-ink/70 transition hover:bg-black/5 md:hidden"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line text-ink/70 transition hover:bg-ink/5 md:hidden"
               >
                 <Phone size={18} />
               </a>
@@ -106,7 +91,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setSearchOpen(true)}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-black/10 transition hover:bg-black/5"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line transition hover:bg-ink/5"
               aria-label="Search"
             >
               <Search size={18} />
@@ -119,7 +104,7 @@ export default function Navbar() {
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-rose px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose/90"
+                className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-brand-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-deep"
               >
                 <MessageCircle size={16} /> WhatsApp
               </a>
@@ -129,7 +114,7 @@ export default function Navbar() {
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-0.5 whitespace-nowrap text-[10px] font-medium text-ink/55 underline decoration-rose/40 underline-offset-2 transition hover:text-rose"
+                className="mt-0.5 whitespace-nowrap text-[10px] font-medium text-ink/55 underline decoration-brand/40 underline-offset-2 transition hover:text-brand-dark"
               >
                 See more on WhatsApp
               </a>
@@ -137,7 +122,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-black/10 md:hidden"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line md:hidden"
               aria-label="Open menu"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
@@ -145,10 +130,10 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile category rail (single horizontal scroll row, hidden scrollbar) */}
+        {/* Mobile category rail */}
         <nav
           aria-label="Mobile categories"
-          className="relative border-t border-black/5 bg-cream md:hidden"
+          className="relative border-t border-line bg-cream md:hidden"
         >
           <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto overscroll-x-contain scroll-smooth scroll-px-3 px-3 py-1.5 sm:px-5 sm:scroll-px-5">
             {navLinks
@@ -159,8 +144,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`shrink-0 whitespace-nowrap rounded-lg border px-3 py-1 text-[11px] font-medium tracking-wide transition-all duration-200 active:scale-[0.96] ${
                     isActive(link.href)
-                      ? "border-rose/25 bg-rose/10 text-rose"
-                      : "border-black/10 bg-cream/80 text-ink/75 hover:border-rose/30 hover:text-rose"
+                      ? "border-brand/25 bg-brand-tint text-brand-dark"
+                      : "border-line bg-cream/80 text-ink/75 hover:border-brand/30 hover:text-brand-dark"
                   }`}
                 >
                   {link.label}
@@ -173,10 +158,10 @@ export default function Navbar() {
           />
         </nav>
 
-        {/* Bottom row: full navigation (never shrinks, its own full-width row) */}
+        {/* Bottom row: full navigation */}
         <nav
           aria-label="Primary"
-          className="hidden items-center justify-center gap-x-6 gap-y-1 border-t border-black/5 pb-2.5 pt-2.5 md:flex md:flex-wrap"
+          className="hidden items-center justify-center gap-x-6 gap-y-1 border-t border-line pb-2.5 pt-2.5 md:flex md:flex-wrap"
         >
           {navLinks
             .filter((link) => link.href !== "/shop")
@@ -184,8 +169,8 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`shrink-0 whitespace-nowrap px-1 text-[13px] font-medium transition hover:text-rose ${
-                  isActive(link.href) ? "text-rose" : "text-ink/70"
+                className={`shrink-0 whitespace-nowrap px-1 text-[13px] font-medium transition hover:text-brand-dark ${
+                  isActive(link.href) ? "text-brand-dark" : "text-ink/70"
                 }`}
               >
                 {link.label}
@@ -198,33 +183,18 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-[60] md:hidden">
           <div
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-ink/40"
             onClick={() => setMobileOpen(false)}
           />
           <div className="absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-cream animate-slide-in overflow-y-auto pb-[max(2rem,env(safe-area-inset-bottom,0px))]">
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-black/5 bg-cream px-6 py-4">
-              <span
-                className="shrink-0 text-ink"
-                style={{
-                  display: "inline-block",
-                  fontFamily: "Georgia, 'Times New Roman', serif",
-                  fontSize: 20,
-                  fontWeight: 400,
-                  letterSpacing: 0,
-                  wordSpacing: 0,
-                  fontKerning: "normal",
-                  fontVariantLigatures: "normal",
-                  textTransform: "none",
-                  whiteSpace: "nowrap",
-                  lineHeight: 1.1,
-                }}
-              >
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line bg-cream px-6 py-4">
+              <span className="shrink-0 font-serif text-xl text-ink">
                 AP Fashion Mart
               </span>
               <button
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close menu"
-                className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/10"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line"
               >
                 <X size={20} />
               </button>
@@ -235,8 +205,8 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex min-h-[48px] items-center rounded-xl px-4 text-base font-medium transition hover:bg-black/5 ${
-                    isActive(link.href) ? "bg-black/5 text-rose" : ""
+                  className={`flex min-h-[48px] items-center rounded-xl px-4 text-base font-medium transition hover:bg-ink/5 ${
+                    isActive(link.href) ? "bg-brand-tint text-brand-dark" : ""
                   }`}
                 >
                   {link.label}
@@ -244,7 +214,7 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <div className="mt-6 space-y-3 border-t border-black/10 px-6 pt-6">
+            <div className="mt-6 space-y-3 border-t border-line px-6 pt-6">
               <a
                 href={`tel:${store.phone.replace(/\s/g, "")}`}
                 className="flex min-h-[48px] items-center gap-3 rounded-full bg-ink px-5 text-sm font-semibold text-white"
@@ -257,7 +227,7 @@ export default function Navbar() {
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex min-h-[48px] items-center gap-3 rounded-full bg-green-600 px-5 text-sm font-semibold text-white"
+                className="flex min-h-[48px] items-center gap-3 rounded-full bg-whatsapp px-5 text-sm font-semibold text-white"
               >
                 <MessageCircle size={18} /> Chat on WhatsApp
               </a>

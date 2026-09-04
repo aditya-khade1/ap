@@ -21,14 +21,14 @@ export default function ProductSection({
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-rose">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
             {subtitle}
           </p>
           <h2 className="mt-2 font-serif text-4xl">{title}</h2>
         </div>
         <Link
           href={viewAllHref}
-          className="text-sm font-medium text-rose transition hover:text-rose/80"
+          className="text-sm font-medium text-brand-dark transition hover:text-brand"
         >
           View All &rarr;
         </Link>

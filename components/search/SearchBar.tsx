@@ -55,23 +55,23 @@ export default function SearchBar({ onClose }: SearchBarProps) {
 
   return (
     <div className="fixed inset-0 z-[70]">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-ink/40" onClick={onClose} />
       <div className="relative mx-auto mt-20 max-w-2xl px-4 animate-slide-up">
         <div className="rounded-2xl bg-white shadow-medium overflow-hidden">
-          <form onSubmit={handleSubmit} className="flex items-center gap-3 border-b border-black/5 px-5">
-            <Search size={20} className="shrink-0 text-black/30" />
+          <form onSubmit={handleSubmit} className="flex items-center gap-3 border-b border-line px-5">
+            <Search size={20} className="shrink-0 text-ink/40" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for sarees, jewellery, kids wear..."
-              className="flex-1 bg-transparent py-4 text-sm outline-none placeholder:text-black/30"
+              className="flex-1 bg-transparent py-4 text-sm outline-none placeholder:text-ink/40"
             />
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 rounded-lg bg-black/5 p-1.5 transition hover:bg-black/10"
+              className="shrink-0 rounded-lg bg-ink/5 p-1.5 transition hover:bg-ink/10"
             >
               <X size={16} />
             </button>
@@ -84,26 +84,26 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                   key={item.slug}
                   href={`/product/${item.slug}`}
                   onClick={onClose}
-                  className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-black/5"
+                  className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition hover:bg-ink/5"
                 >
                   <div>
                     <div className="font-medium">{item.name}</div>
-                    <div className="text-xs text-black/40">{item.category}</div>
+                    <div className="text-xs text-ink/50">{item.category}</div>
                   </div>
-                  <ArrowRight size={16} className="text-black/30" />
+                  <ArrowRight size={16} className="text-ink/30" />
                 </Link>
               ))}
             </div>
           )}
 
           {query.length >= 2 && results.length === 0 && !loading && (
-            <div className="p-6 text-center text-sm text-black/40">
+            <div className="p-6 text-center text-sm text-ink/50">
               No products found for &ldquo;{query}&rdquo;
             </div>
           )}
 
           {query.length < 2 && (
-            <div className="p-6 text-center text-sm text-black/40">
+            <div className="p-6 text-center text-sm text-ink/50">
               Type to search products...
             </div>
           )}

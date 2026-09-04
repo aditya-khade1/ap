@@ -27,7 +27,7 @@ export default function Hero() {
           </div>
           <h1 className="mx-auto max-w-2xl font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl">
             Everyday fashion,{" "}
-            <span className="text-amber-200">beautifully chosen.</span>
+            <span className="text-sky">beautifully chosen.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/75 sm:text-lg lg:text-xl">
             Discover sarees, kids wear, jewellery, bangles and night suits — all
@@ -38,7 +38,7 @@ export default function Hero() {
               href="/#featured-picks"
               className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-ink transition hover:bg-white/90"
             >
-              Shop Collection <ArrowRight size={17} />
+              Shop Collection <ArrowRight size={17} className="text-brand" />
             </Link>
             <Link
               href={store.mapUrl}

@@ -7,7 +7,7 @@ export default function OffersSection() {
       <div className="grid gap-6 sm:grid-cols-2">
         <Link
           href="/category/sarees"
-          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose to-rose/80 p-8 text-white transition hover:shadow-medium sm:p-10"
+          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-dark to-brand-deep p-8 text-white transition hover:shadow-medium sm:p-10"
         >
           <Tag size={28} className="mb-4 opacity-70" />
           <h3 className="font-serif text-3xl">Saree Festival Sale</h3>
@@ -21,7 +21,7 @@ export default function OffersSection() {
 
         <Link
           href="/category/jewellery"
-          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-gold to-gold/80 p-8 text-white transition hover:shadow-medium sm:p-10"
+          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky to-sky-deep p-8 text-white transition hover:shadow-medium sm:p-10"
         >
           <Percent size={28} className="mb-4 opacity-70" />
           <h3 className="font-serif text-3xl">Jewellery Special</h3>
