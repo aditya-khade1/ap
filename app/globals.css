@@ -96,11 +96,16 @@ body {
 
 @layer base {
   * {
-    @apply border-black/5;
+    @apply border-line;
   }
 
   img {
     @apply max-w-full h-auto;
+  }
+
+  ::selection {
+    background: #ec268f;
+    color: #ffffff;
   }
 }
 
